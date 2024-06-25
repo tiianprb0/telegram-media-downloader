@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Telegram Media Downloader
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      1.5
 // @description  Download media from Telegram Web
-// @author       Tian Purba
+// @author       Tian
 // @match        https://web.telegram.org/*
 // @grant        none
 // ==/UserScript==
@@ -48,6 +48,8 @@
             url = node.src || node.querySelector('source')?.src;
         } else if (node.nodeName === 'IMG') {
             url = node.src;
+        } else if (node.nodeName === 'DIV' && node.style.backgroundImage) {
+            url = node.style.backgroundImage.slice(5, -2); // Extract URL from background-image
         }
         return url;
     }
@@ -57,7 +59,7 @@
         mutations.forEach(mutation => {
             if (mutation.addedNodes.length) {
                 mutation.addedNodes.forEach(node => {
-                    if (node.nodeType === 1 && (node.matches('video') || node.matches('img'))) {
+                    if (node.nodeType === 1) {
                         const url = findMediaURL(node);
                         if (url) {
                             const filename = url.split('/').pop().split('?')[0];
