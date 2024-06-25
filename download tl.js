@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Telegram Downloader
+// @name         Telegram Media Downloader
 // @namespace    http://tampermonkey.net/
-// @version      1.7
+// @version      1.5
 // @description  Download media from Telegram Web
 // @author       Tian
 // @match        https://web.telegram.org/*
@@ -21,12 +21,12 @@
         button.download = filename;
         button.style.position = 'fixed';
         button.style.right = '10px';
-        button.style.bottom = '130px';  // Adjusted to move the button higher
-        button.style.width = '40px';
-        button.style.height = '40px';
+        button.style.bottom = '100px';  // Adjusted to move the button higher
+        button.style.width = '150px'; // Increased button width
+        button.style.height = '40px'; // Button height
         button.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
         button.style.border = '1px solid #ccc';
-        button.style.borderRadius = '50%';
+        button.style.borderRadius = '5px'; // Slight border radius
         button.style.display = 'flex';
         button.style.alignItems = 'center';
         button.style.justifyContent = 'center';
@@ -36,7 +36,12 @@
         icon.src = downloadIconUrl;
         icon.style.width = '24px';
         icon.style.height = '24px';
+        icon.style.marginRight = '5px'; // Added margin to icon for spacing
         button.appendChild(icon);
+
+        const buttonText = document.createElement('span');
+        buttonText.innerText = 'Download';
+        button.appendChild(buttonText);
 
         document.body.appendChild(button);
     }
@@ -45,7 +50,11 @@
     function findMediaURL(node) {
         let url = null;
         if (node.nodeName === 'VIDEO') {
-            url = node.src || node.querySelector('source')?.src;
+            // Check for video stream URL pattern
+            const src = node.src || node.querySelector('source')?.src;
+            if (src && src.includes('.telegram.org/k/stream')) {
+                url = src;
+            }
         } else if (node.nodeName === 'IMG') {
             url = node.src;
         } else if (node.nodeName === 'DIV' && node.style.backgroundImage) {
