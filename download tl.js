@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Telegram Downloader
 // @namespace    http://tampermonkey.net/
-// @version      1.7
+// @version      2
 // @description  Download media from Telegram Web
 // @author       Tian
 // @match        https://web.telegram.org/*
