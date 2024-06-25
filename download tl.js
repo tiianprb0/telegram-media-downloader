@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Telegram Media Downloader
 // @namespace    http://tampermonkey.net/
-// @version      1.5
+// @version      0.6
 // @description  Download media from Telegram Web
-// @author       Tian
+// @author       Your Name
 // @match        https://web.telegram.org/*
 // @grant        none
 // ==/UserScript==
@@ -21,7 +21,7 @@
         button.download = filename;
         button.style.position = 'fixed';
         button.style.right = '10px';
-        button.style.bottom = '60px';  // Adjusted to move the button higher
+        button.style.bottom = '80px';  // Adjusted to move the button higher
         button.style.width = '40px';
         button.style.height = '40px';
         button.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
@@ -49,7 +49,9 @@
         } else if (node.nodeName === 'IMG') {
             url = node.src;
         } else if (node.nodeName === 'DIV' && node.style.backgroundImage) {
-            url = node.style.backgroundImage.slice(5, -2); // Extract URL from background-image
+            // Extract URL from background-image CSS property
+            const backgroundImage = node.style.backgroundImage;
+            url = backgroundImage.slice(4, -1).replace(/"/g, ""); // Remove 'url(' and ')' and quotes
         }
         return url;
     }
