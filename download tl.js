@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.3
 // @description  Download media from Telegram Web
-// @author       Tian
+// @author       Your Name
 // @match        https://web.telegram.org/*
 // @grant        none
 // ==/UserScript==
@@ -12,7 +12,7 @@
     'use strict';
 
     // URL to download icon
-    const downloadIconUrl = 'https://image.shutterstock.com/image-vector/download-icon-vector-260nw-1250254233.jpg';
+    const downloadIconUrl = 'https://static.vecteezy.com/system/resources/previews/015/337/688/non_2x/download-download-icon-free-png.png';
 
     // Function to create a floating download button
     function createDownloadButton(url, filename, mediaElement) {
@@ -21,7 +21,7 @@
         button.download = filename;
         button.style.position = 'fixed';
         button.style.right = '10px';
-        button.style.bottom = '20px';
+        button.style.bottom = '60px';  // Adjusted to move the button higher
         button.style.width = '40px';
         button.style.height = '40px';
         button.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
